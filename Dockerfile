@@ -3,7 +3,7 @@ MAINTAINER Armen K
 ENV SYSTEMC_VERSION 2.3.0a
 
 RUN apt-get update -q && apt-get install -qy --no-install-recommends \
-      ca-certificates build-essential wget curl libboost-dev python-dev libglib2.0-dev libpixman-1-dev liblua5.2-dev swig git telnet \
+      ca-certificates build-essential wget curl libboost-dev python-dev libglib2.0-dev libpixman-1-dev liblua5.2-dev swig git telnet flex bison \
       cmake \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
@@ -21,7 +21,6 @@ RUN mkdir -p /usr/src/systemc \
  && ../configure --prefix=/usr/local/systemc-$SYSTEMC_VERSION \
  && make \
  && make install \
- && make check \
  && cd / \
  && rm -rf /usr/src/systemc
 
@@ -31,7 +30,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/systemc-$SYSTEMC_VERSION/lib-lin
 ENV SYSTEMC_HOME=/usr/local/systemc-$SYSTEMC_VERSION
 
 RUN mkdir -p /greensocs \
-    && cd /greensocs
+    && cd /greensocs \
     && git clone https://git.greensocs.com/platforms/versatile-pb.git \
     && cd versatile-pb \
     && git submodule update --init \
